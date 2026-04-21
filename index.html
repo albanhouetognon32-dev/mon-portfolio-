@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Aurèle HOUETOGNON — Géographe · Environnementaliste</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f5f2ec;
+  --bg2:#fdfaf5;
+  --white:#ffffff;
+  --surface:#eeeae2;
+  --surface2:#e5e0d5;
+  --green:#2d6b45;
+  --green-mid:#4a9266;
+  --green-light:#d4ead9;
+  --green-xlight:#edf6ef;
+  --gold:#b07d2a;
+  --text:#1a1c18;
+  --text-mid:#3d4038;
+  --text-dim:#6b6f62;
+  --text-muted:#9a9e91;
+  --border:#ddd8ce;
+  --border-light:#e8e4da;
+  --serif:'Instrument Serif',Georgia,serif;
+  --display:'Syne',sans-serif;
+  --body:'Inter',sans-serif;
+  --radius:10px;
+  --shadow:0 2px 12px rgba(0,0,0,0.06);
+  --shadow-lg:0 8px 32px rgba(0,0,0,0.1);
+}
+
+html{scroll-behavior:smooth}
+body{font-family:var(--body);background:var(--bg);color:var(--text);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding:0 5vw;height:62px;
+  display:flex;align-items:center;justify-content:space-between;
+  transition:background 0.4s,box-shadow 0.4s;
+}
+nav.scrolled{background:rgba(245,242,236,0.95);backdrop-filter:blur(16px);box-shadow:0 1px 0 var(--border)}
+.nav-logo{
+  font-family:var(--display);font-weight:800;font-size:1rem;
+  letter-spacing:0.04em;color:var(--text);text-decoration:none;
+  display:flex;align-items:center;gap:0.5rem;
+}
+.nav-dot{width:8px;height:8px;background:var(--green);border-radius:50%;animation:pulse 2.5s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.4;transform:scale(0.7)}}
+.nav-links{display:flex;gap:1.8rem;list-style:none}
+.nav-links a{
+  font-size:0.73rem;font-weight:500;letter-spacing:0.09em;
+  text-transform:uppercase;color:var(--text-dim);text-decoration:none;
+  transition:color 0.2s;position:relative;
+}
+.nav-links a::after{content:'';position:absolute;left:0;bottom:-3px;width:0;height:1.5px;background:var(--green);transition:width 0.3s}
+.nav-links a:hover{color:var(--green)}
+.nav-links a:hover::after{width:100%}
+/* Hamburger */
+.nav-toggle{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
+.nav-toggle span{display:block;width:22px;height:2px;background:var(--text);border-radius:2px;transition:all 0.3s}
+.nav-toggle.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.nav-toggle.open span:nth-child(2){opacity:0}
+.nav-toggle.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+/* Mobile menu */
+.mobile-menu{
+  display:none;position:fixed;top:62px;left:0;right:0;z-index:99;
+  background:var(--white);box-shadow:var(--shadow-lg);
+  padding:1.5rem 5vw 2rem;flex-direction:column;gap:0;
+  border-top:1px solid var(--border);
+}
+.mobile-menu.open{display:flex}
+.mobile-menu a{
+  display:block;padding:0.9rem 0;font-size:0.9rem;font-weight:500;
+  color:var(--text-mid);text-decoration:none;letter-spacing:0.05em;
+  border-bottom:1px solid var(--border-light);transition:color 0.2s;
+}
+.mobile-menu a:hover{color:var(--green)}
+
+/* ── HERO ── */
+#hero{
+  min-height:100vh;display:flex;align-items:center;
+  padding:90px 5vw 60px;position:relative;overflow:hidden;
+}
+.hero-bg-circle{
+  position:absolute;top:-10%;right:-5%;
+  width:55vw;height:55vw;max-width:700px;max-height:700px;
+  background:radial-gradient(circle,var(--green-xlight) 0%,transparent 70%);
+  border-radius:50%;pointer-events:none;
+}
+.hero-bg-dots{
+  position:absolute;bottom:10%;left:2%;
+  width:200px;height:200px;
+  background-image:radial-gradient(circle,var(--green-light) 1.5px,transparent 1.5px);
+  background-size:20px 20px;pointer-events:none;opacity:0.5;
+}
+.hero-inner{
+  display:grid;grid-template-columns:1.1fr 1fr;
+  gap:4rem;align-items:center;
+  width:100%;max-width:1200px;margin:0 auto;position:relative;z-index:1;
+}
+.hero-tag{
+  display:inline-flex;align-items:center;gap:0.6rem;
+  font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--green);font-weight:600;margin-bottom:1.4rem;
+  background:var(--green-xlight);padding:0.35rem 0.9rem;border-radius:100px;
+  border:1px solid var(--green-light);width:fit-content;
+}
+.hero-tag::before{content:'';display:block;width:6px;height:6px;background:var(--green);border-radius:50%}
+.hero-name{
+  font-family:var(--display);font-weight:800;
+  font-size:clamp(2.4rem,4.5vw,4.5rem);
+  line-height:1;letter-spacing:-0.02em;color:var(--text);margin-bottom:0.8rem;
+}
+.hero-name .accent{color:var(--green)}
+.hero-subtitle{
+  font-family:var(--serif);font-style:italic;
+  font-size:clamp(1rem,1.8vw,1.45rem);color:var(--text-dim);margin-bottom:1.5rem;
+}
+.hero-desc{
+  font-size:0.92rem;color:var(--text-dim);line-height:1.82;
+  max-width:500px;margin-bottom:2.2rem;
+}
+.hero-actions{display:flex;gap:0.8rem;flex-wrap:wrap;align-items:center}
+.btn{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  padding:0.75rem 1.6rem;font-family:var(--display);
+  font-size:0.75rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;
+  text-decoration:none;border-radius:100px;
+  transition:all 0.25s;cursor:pointer;border:none;white-space:nowrap;
+}
+.btn-primary{background:var(--green);color:#fff;box-shadow:0 4px 16px rgba(45,107,69,0.25)}
+.btn-primary:hover{background:#235535;transform:translateY(-2px);box-shadow:0 8px 24px rgba(45,107,69,0.35)}
+.btn-outline{background:transparent;color:var(--text);border:1.5px solid var(--border)}
+.btn-outline:hover{border-color:var(--green);color:var(--green);transform:translateY(-2px)}
+.btn-cv{background:var(--gold);color:#fff;box-shadow:0 4px 16px rgba(176,125,42,0.2)}
+.btn-cv:hover{background:#8f6420;transform:translateY(-2px);box-shadow:0 8px 24px rgba(176,125,42,0.3)}
+.btn-cv svg{flex-shrink:0}
+
+/* Hero right */
+.hero-right{display:flex;flex-direction:column;gap:1.2rem;align-items:flex-end}
+.hero-photo{
+  width:280px;height:350px;
+  background:var(--green-xlight);border:1px solid var(--green-light);
+  border-radius:var(--radius);overflow:hidden;position:relative;
+  box-shadow:var(--shadow-lg);
+}
+.hero-photo::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(180deg,transparent 60%,rgba(45,107,69,0.08));
+}
+.photo-placeholder{
+  width:100%;height:100%;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:0.8rem;color:var(--text-muted);
+}
+.photo-placeholder svg{opacity:0.35}
+.photo-placeholder span{font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase}
+.hero-stats{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:1px;background:var(--border);
+  border:1px solid var(--border);border-radius:var(--radius);
+  overflow:hidden;width:280px;box-shadow:var(--shadow);
+}
+.stat{background:var(--white);padding:1.1rem 1rem;text-align:center;transition:background 0.2s}
+.stat:hover{background:var(--green-xlight)}
+.stat-num{font-family:var(--display);font-size:1.5rem;font-weight:800;color:var(--green);display:block}
+.stat-label{font-size:0.62rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted)}
+
+/* Scroll indicator */
+.hero-scroll{
+  position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:0.4rem;
+  color:var(--text-muted);font-size:0.62rem;letter-spacing:0.15em;text-transform:uppercase;
+  animation:scrollBounce 2s ease-in-out infinite;
+}
+@keyframes scrollBounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(7px)}}
+.hero-scroll::after{content:'';display:block;width:1px;height:32px;background:linear-gradient(to bottom,var(--green),transparent)}
+
+/* ── HERO ANIM ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+.h-anim{opacity:0;animation:fadeUp 0.75s ease forwards}
+.h-anim:nth-child(1){animation-delay:0.05s}
+.h-anim:nth-child(2){animation-delay:0.18s}
+.h-anim:nth-child(3){animation-delay:0.32s}
+.h-anim:nth-child(4){animation-delay:0.46s}
+.h-anim:nth-child(5){animation-delay:0.6s}
+.hero-right{opacity:0;animation:fadeUp 0.85s ease 0.4s forwards}
+
+/* ── REVEAL ── */
+.reveal{opacity:0;transform:translateY(32px);transition:opacity 0.65s ease,transform 0.65s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.rd1{transition-delay:0.08s}.rd2{transition-delay:0.18s}.rd3{transition-delay:0.28s}.rd4{transition-delay:0.38s}
+
+/* ── SECTIONS GÉNÉRALES ── */
+section{padding:90px 5vw}
+.sec-inner{max-width:1200px;margin:0 auto}
+.section-tag{
+  display:inline-flex;align-items:center;gap:0.6rem;
+  font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--green);font-weight:600;margin-bottom:0.7rem;
+}
+.section-tag::before{content:'';display:block;width:1.4rem;height:1.5px;background:var(--green)}
+h2.stitle{
+  font-family:var(--display);font-weight:800;
+  font-size:clamp(1.9rem,3.5vw,3.2rem);
+  letter-spacing:-0.02em;color:var(--text);
+  margin-bottom:3rem;line-height:1.05;
+}
+h2.stitle em{font-family:var(--serif);font-style:italic;color:var(--green);font-weight:400}
+
+/* alt backgrounds */
+#apropos,#projets,#distinctions{background:var(--bg2)}
+#formation,#experiences,#competences,#activites,#contact{background:var(--bg)}
+
+/* ── À PROPOS ── */
+.about-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:5rem;align-items:start}
+.about-text p{font-size:0.95rem;color:var(--text-dim);line-height:1.85;margin-bottom:1.2rem}
+.about-text p:first-child{font-family:var(--serif);font-style:italic;font-size:1.2rem;color:var(--text);line-height:1.65}
+.info-block{}
+.info-row{display:flex;gap:1rem;padding:0.8rem 0;border-bottom:1px solid var(--border-light)}
+.info-row:first-child{border-top:1px solid var(--border-light)}
+.info-key{font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted);width:110px;flex-shrink:0;padding-top:2px}
+.info-val{font-size:0.88rem;color:var(--text-mid)}
+
+/* ── FORMATION ── */
+.tl-wrap{display:flex;flex-direction:column}
+.tl-item{
+  display:grid;grid-template-columns:130px 1fr;gap:2rem;
+  padding:2rem 0;border-bottom:1px solid var(--border-light);
+}
+.tl-item:first-child{border-top:1px solid var(--border-light)}
+.tl-year{font-family:var(--serif);font-style:italic;font-size:0.88rem;color:var(--text-muted);padding-top:3px}
+.tl-degree{font-family:var(--display);font-weight:700;font-size:0.98rem;color:var(--text);margin-bottom:0.25rem}
+.tl-school{font-size:0.84rem;color:var(--green);font-weight:500;margin-bottom:0.4rem}
+.tl-detail{font-size:0.83rem;color:var(--text-dim);line-height:1.6}
+.badge{display:inline-flex;align-items:center;gap:0.3rem;margin-top:0.5rem;padding:0.2rem 0.7rem;font-size:0.64rem;letter-spacing:0.08em;text-transform:uppercase;border:1.5px solid var(--green-mid);color:var(--green);border-radius:100px;font-weight:600}
+
+/* ── EXPÉRIENCES ── */
+.exp-list{display:flex;flex-direction:column}
+.exp-item{
+  display:grid;grid-template-columns:200px 1fr;gap:3rem;
+  padding:2.2rem 0;border-bottom:1px solid var(--border-light);
+}
+.exp-item:first-child{border-top:1px solid var(--border-light)}
+.exp-period{font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:0.35rem}
+.exp-org{font-family:var(--display);font-weight:700;font-size:0.88rem;color:var(--green);margin-bottom:0.2rem}
+.exp-loc{font-size:0.78rem;color:var(--text-muted)}
+.exp-role{font-family:var(--display);font-weight:700;font-size:0.98rem;color:var(--text);margin-bottom:0.65rem;line-height:1.3}
+.exp-desc{font-size:0.85rem;color:var(--text-dim);line-height:1.75}
+.tags{display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.9rem}
+.tag{padding:0.22rem 0.6rem;font-size:0.64rem;letter-spacing:0.06em;text-transform:uppercase;background:var(--green-xlight);color:var(--green);border-radius:100px;border:1px solid var(--green-light);font-weight:500}
+
+/* ── COMPÉTENCES ── */
+.skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+.skill-card{
+  background:var(--white);border:1px solid var(--border);
+  border-radius:var(--radius);padding:1.8rem;
+  transition:border-color 0.25s,box-shadow 0.25s,transform 0.25s;
+  box-shadow:var(--shadow);
+}
+.skill-card:hover{border-color:var(--green-mid);box-shadow:var(--shadow-lg);transform:translateY(-3px)}
+.skill-icon{font-size:1.6rem;margin-bottom:1rem}
+.skill-title{font-family:var(--display);font-weight:700;font-size:0.8rem;letter-spacing:0.09em;text-transform:uppercase;color:var(--green);margin-bottom:1rem;padding-bottom:0.75rem;border-bottom:1px solid var(--border-light)}
+.skill-list{list-style:none}
+.skill-list li{font-size:0.85rem;color:var(--text-dim);padding:0.3rem 0;display:flex;align-items:center;gap:0.55rem}
+.skill-list li::before{content:'';display:block;width:4px;height:4px;background:var(--green-mid);border-radius:50%;flex-shrink:0}
+
+/* ── CV DOWNLOAD ── */
+#telecharger{background:var(--green);padding:70px 5vw}
+.cv-inner{
+  max-width:1200px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;
+}
+.cv-text h2{font-family:var(--display);font-weight:800;font-size:clamp(1.6rem,3vw,2.4rem);color:#fff;margin-bottom:0.5rem;letter-spacing:-0.01em}
+.cv-text p{font-size:0.9rem;color:rgba(255,255,255,0.75);max-width:500px;line-height:1.7}
+.btn-cv-dl{
+  display:inline-flex;align-items:center;gap:0.7rem;
+  padding:1rem 2rem;background:#fff;color:var(--green);
+  font-family:var(--display);font-size:0.8rem;font-weight:800;
+  letter-spacing:0.08em;text-transform:uppercase;text-decoration:none;
+  border-radius:100px;transition:all 0.25s;white-space:nowrap;
+  box-shadow:0 4px 20px rgba(0,0,0,0.15);
+}
+.btn-cv-dl:hover{background:var(--green-xlight);transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,0,0,0.2)}
+.cv-note{font-size:0.72rem;color:rgba(255,255,255,0.55);margin-top:0.6rem;text-align:center}
+
+/* ── PROJETS ── */
+.projects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+.proj-card{
+  background:var(--white);border:1px solid var(--border);border-radius:var(--radius);
+  padding:1.8rem;transition:border-color 0.25s,box-shadow 0.25s,transform 0.25s;
+  box-shadow:var(--shadow);position:relative;overflow:hidden;
+}
+.proj-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--green),var(--green-mid));
+  transform:scaleX(0);transform-origin:left;transition:transform 0.35s ease;
+}
+.proj-card:hover{border-color:var(--green-mid);box-shadow:var(--shadow-lg);transform:translateY(-4px)}
+.proj-card:hover::before{transform:scaleX(1)}
+.proj-icon{font-size:1.8rem;margin-bottom:1rem}
+.proj-title{font-family:var(--display);font-weight:700;font-size:0.93rem;color:var(--text);margin-bottom:0.55rem;line-height:1.3}
+.proj-desc{font-size:0.82rem;color:var(--text-dim);line-height:1.65}
+.proj-tech{margin-top:1.1rem;font-size:0.67rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--green-mid);font-weight:500}
+
+/* ── ACTIVITÉS ── */
+.act-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+.act-card{
+  background:var(--white);border:1px solid var(--border);border-radius:var(--radius);
+  overflow:hidden;transition:border-color 0.25s,box-shadow 0.25s,transform 0.25s;
+  box-shadow:var(--shadow);
+}
+.act-card:hover{border-color:var(--green-mid);box-shadow:var(--shadow-lg);transform:translateY(-4px)}
+.act-header{
+  padding:1rem 1.4rem;background:var(--green-xlight);border-bottom:1px solid var(--green-light);
+  display:flex;align-items:center;justify-content:space-between;gap:1rem;
+}
+.act-type{font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--green);font-weight:700}
+.act-date{font-size:0.7rem;color:var(--text-muted);white-space:nowrap}
+.act-body{padding:1.3rem 1.4rem 1.5rem}
+.act-title{font-family:var(--display);font-weight:700;font-size:0.92rem;color:var(--text);margin-bottom:0.65rem;line-height:1.35}
+.act-desc{font-size:0.82rem;color:var(--text-dim);line-height:1.65}
+.act-role{margin-top:1rem;padding-top:0.75rem;border-top:1px solid var(--border-light);font-size:0.7rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--green);font-weight:600}
+
+/* ── DISTINCTIONS ── */
+.awards-list{display:flex;flex-direction:column}
+.award-item{
+  display:grid;grid-template-columns:80px 1fr auto;gap:2rem;
+  padding:1.8rem 0;border-bottom:1px solid var(--border-light);align-items:center;
+}
+.award-item:first-child{border-top:1px solid var(--border-light)}
+.award-year{font-family:var(--display);font-weight:800;font-size:1.9rem;color:var(--green);line-height:1;opacity:0.7}
+.award-name{font-family:var(--display);font-weight:700;font-size:0.98rem;color:var(--text);margin-bottom:0.3rem}
+.award-body{font-size:0.83rem;color:var(--text-dim);line-height:1.6}
+.award-icon{font-size:2rem}
+
+/* ── CONTACT ── */
+#contact{background:var(--bg)}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start}
+.contact-intro{font-family:var(--serif);font-style:italic;font-size:1.45rem;color:var(--text);line-height:1.5;margin-bottom:2.2rem}
+.contact-links{display:flex;flex-direction:column;gap:0.7rem}
+.contact-link{
+  display:flex;align-items:center;gap:1rem;text-decoration:none;
+  color:var(--text-dim);font-size:0.88rem;padding:0.85rem 1.1rem;
+  border:1px solid var(--border);border-radius:8px;background:var(--white);
+  transition:all 0.2s;box-shadow:var(--shadow);
+}
+.contact-link:hover{color:var(--green);border-color:var(--green-mid);transform:translateX(4px);box-shadow:var(--shadow-lg)}
+.contact-link-icon{width:34px;height:34px;background:var(--green-xlight);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.85rem;flex-shrink:0;border:1px solid var(--green-light)}
+.form-wrap{display:flex;flex-direction:column;gap:1rem}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.form-field{display:flex;flex-direction:column;gap:0.4rem}
+.form-field label{font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted);font-weight:500}
+.form-field input,.form-field textarea{
+  background:var(--white);border:1.5px solid var(--border);border-radius:8px;
+  padding:0.8rem 1rem;color:var(--text);font-family:var(--body);font-size:0.88rem;
+  outline:none;transition:border-color 0.2s,box-shadow 0.2s;resize:vertical;
+}
+.form-field input:focus,.form-field textarea:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(45,107,69,0.1)}
+.form-field textarea{min-height:110px}
+.form-field input::placeholder,.form-field textarea::placeholder{color:var(--text-muted)}
+
+/* ── FOOTER ── */
+footer{background:var(--text);padding:2rem 5vw;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.footer-brand{font-family:var(--display);font-weight:700;font-size:0.85rem;color:rgba(255,255,255,0.5)}
+.footer-links{display:flex;gap:1.5rem;list-style:none}
+.footer-links a{font-size:0.7rem;color:rgba(255,255,255,0.4);text-decoration:none;letter-spacing:0.08em;text-transform:uppercase;transition:color 0.2s}
+.footer-links a:hover{color:var(--green-mid)}
+
+/* ── RESPONSIVE MOBILE ── */
+@media(max-width:900px){
+  .nav-links{display:none}
+  .nav-toggle{display:flex}
+  #hero{padding:90px 5vw 80px}
+  .hero-inner{grid-template-columns:1fr;gap:3rem}
+  .hero-right{align-items:center}
+  .hero-photo{width:240px;height:300px}
+  .hero-stats{width:240px}
+  .hero-scroll{display:none}
+  .about-grid{grid-template-columns:1fr;gap:2.5rem}
+  .tl-item{grid-template-columns:1fr;gap:0.4rem}
+  .exp-item{grid-template-columns:1fr;gap:0.5rem}
+  .skills-grid,.projects-grid,.act-grid{grid-template-columns:1fr 1fr}
+  .contact-grid{grid-template-columns:1fr;gap:3rem}
+  .award-item{grid-template-columns:70px 1fr;gap:1rem}
+  .award-icon{display:none}
+  .cv-inner{flex-direction:column;text-align:center}
+  .cv-text p{margin:0 auto}
+}
+@media(max-width:600px){
+  section{padding:70px 5vw}
+  .skills-grid,.projects-grid,.act-grid,.form-row{grid-template-columns:1fr}
+  h2.stitle{font-size:1.8rem}
+  .hero-name{font-size:2.2rem}
+  .hero-actions{flex-direction:column;align-items:flex-start}
+  .btn{width:100%;justify-content:center}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a class="nav-logo" href="#hero"><div class="nav-dot"></div>H.C.A. Aurèle</a>
+  <ul class="nav-links">
+    <li><a href="#apropos">À propos</a></li>
+    <li><a href="#formation">Formation</a></li>
+    <li><a href="#experiences">Expériences</a></li>
+    <li><a href="#competences">Compétences</a></li>
+    <li><a href="#projets">Projets</a></li>
+    <li><a href="#activites">Activités</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="nav-toggle" id="navToggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#apropos" onclick="closeMobile()">À propos</a>
+  <a href="#formation" onclick="closeMobile()">Formation</a>
+  <a href="#experiences" onclick="closeMobile()">Expériences</a>
+  <a href="#competences" onclick="closeMobile()">Compétences</a>
+  <a href="#projets" onclick="closeMobile()">Projets</a>
+  <a href="#activites" onclick="closeMobile()">Activités</a>
+  <a href="#contact" onclick="closeMobile()">Contact</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg-circle"></div>
+  <div class="hero-bg-dots"></div>
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="hero-tag h-anim">Géographe · Environnementaliste · Bénin</div>
+      <h1 class="hero-name h-anim">HOUETOGNON<br>Comlan Alban<br><span class="accent">Aurèle</span></h1>
+      <p class="hero-subtitle h-anim">Géographie &amp; Aménagement du Territoire</p>
+      <p class="hero-desc h-anim">Spécialisé en évaluation environnementale et sociale, cartographie SIG et gouvernance climatique. Engagé pour une gestion durable des ressources naturelles en Afrique de l'Ouest.</p>
+      <div class="hero-actions h-anim">
+        <a href="#contact" class="btn btn-primary">Me contacter →</a>
+        <a href="#projets" class="btn btn-outline">Voir mes projets</a>
+        <!-- REMPLACE "mon-cv.docx" par le nom réel de ton fichier CV une fois uploadé -->
+        <a href="mon-cv.docx" download class="btn btn-cv">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Télécharger mon CV
+        </a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-photo">
+        <div class="photo-placeholder">
+          <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8">
+            <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+          </svg>
+          <span>Votre photo ici</span>
+        </div>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-num">3+</span><span class="stat-label">Ans terrain</span></div>
+        <div class="stat"><span class="stat-num">2024</span><span class="stat-label">Eco Award</span></div>
+        <div class="stat"><span class="stat-num">QGIS</span><span class="stat-label">Expert SIG</span></div>
+        <div class="stat"><span class="stat-num">EIES</span><span class="stat-label">Éval. env.</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll">scroll</div>
+</section>
+
+<!-- À PROPOS -->
+<section id="apropos">
+<div class="sec-inner">
+  <p class="section-tag reveal">À propos</p>
+  <h2 class="stitle reveal rd1">Qui <em>suis-je</em> ?</h2>
+  <div class="about-grid">
+    <div class="about-text reveal rd2">
+      <p>Ma vocation est née sur le terrain — dans les écosystèmes côtiers du Bénin, entre la mangrove de la Bouche du Roy et les carrières du littoral. Comprendre comment les territoires se transforment, documenter ces mutations et proposer des solutions concrètes : c'est ce qui guide mon travail.</p>
+      <p>Géographe de formation, j'ai acquis une expertise opérationnelle en évaluation environnementale et sociale au sein de l'Agence Béninoise pour l'Environnement. Cette expérience m'a confirmé que rigueur scientifique et engagement citoyen se renforcent mutuellement.</p>
+      <p>Fondateur impliqué dans l'ONG Save Our Planet et lauréat des Eco Benin Awards 2024, je travaille à l'intersection de la recherche appliquée, de la géomatique et de la politique climatique, avec pour horizon le doctorat et la création d'un cabinet de conseil environnemental.</p>
+    </div>
+    <div class="info-block reveal rd3">
+      <div class="info-row"><span class="info-key">Localisation</span><span class="info-val">Abomey-Calavi, Bénin</span></div>
+      <div class="info-row"><span class="info-key">Domaine</span><span class="info-val">Géographie · Environnement · SIG</span></div>
+      <div class="info-row"><span class="info-key">Langues</span><span class="info-val">Français (natif) · Anglais (pro)</span></div>
+      <div class="info-row"><span class="info-key">Logiciels</span><span class="info-val">QGIS · ArcGIS · Office 365</span></div>
+      <div class="info-row"><span class="info-key">Objectif</span><span class="info-val">Master &amp; recherche doctorale</span></div>
+      <div class="info-row"><span class="info-key">Statut</span><span class="info-val">Ouvert aux opportunités</span></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- FORMATION -->
+<section id="formation">
+<div class="sec-inner">
+  <p class="section-tag reveal">Formation</p>
+  <h2 class="stitle reveal rd1">Parcours <em>académique</em></h2>
+  <div class="tl-wrap">
+    <div class="tl-item reveal rd2">
+      <div class="tl-year">En cours</div>
+      <div>
+        <div class="tl-degree">Licence Professionnelle — Géographie &amp; Aménagement du Territoire</div>
+        <div class="tl-school">Université de Parakou, Bénin</div>
+        <div class="tl-detail">Spécialisation en aménagement territorial, gestion de l'environnement et cartographie appliquée.</div>
+      </div>
+    </div>
+    <div class="tl-item reveal rd3">
+      <div class="tl-year">2024</div>
+      <div>
+        <div class="tl-degree">Licence Professionnelle — Géographie &amp; Aménagement du Territoire</div>
+        <div class="tl-school">Université de Parakou, Bénin</div>
+        <div class="tl-detail">Obtenu avec la mention Bien. Travaux portant sur la gestion territoriale et les ressources naturelles au Bénin.</div>
+        <span class="badge">✦ Mention Bien</span>
+      </div>
+    </div>
+    <div class="tl-item reveal rd4">
+      <div class="tl-year">Continu</div>
+      <div>
+        <div class="tl-degree">Cartographie &amp; SIG — QGIS avancé</div>
+        <div class="tl-school">Autoformation &amp; Pratique professionnelle</div>
+        <div class="tl-detail">Maîtrise des projections (UTM Zone 31N / EPSG:32631, WGS84), géotraitement, production de Shapefiles et KML pour l'instruction de dossiers d'impact environnemental.</div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- EXPÉRIENCES -->
+<section id="experiences">
+<div class="sec-inner">
+  <p class="section-tag reveal">Expériences</p>
+  <h2 class="stitle reveal rd1">Ce que j'ai <em>accompli</em></h2>
+  <div class="exp-list">
+    <div class="exp-item reveal rd2">
+      <div>
+        <div class="exp-period">2025 — Avril 2026</div>
+        <div class="exp-org">Agence Béninoise pour l'Environnement</div>
+        <div class="exp-loc">📍 Cotonou, Bénin</div>
+      </div>
+      <div>
+        <div class="exp-role">Stagiaire — Direction des Évaluations Environnementales et Sociales (DEES)</div>
+        <div class="exp-desc">Instruction de dossiers d'EIES et NIES, production de données SIG pour projets d'infrastructure (Route des Pêches, carrières du littoral), rédaction de rapports techniques conformes aux normes IFC/Banque Mondiale. Cartographie des aires marines protégées de la Bouche du Roy et Donaten.</div>
+        <div class="tags"><span class="tag">EIES / NIES</span><span class="tag">QGIS</span><span class="tag">Rapports IFC</span><span class="tag">Aires protégées</span><span class="tag">PGES</span></div>
+      </div>
+    </div>
+    <div class="exp-item reveal rd3">
+      <div>
+        <div class="exp-period">Engagement continu</div>
+        <div class="exp-org">ONG Save Our Planet</div>
+        <div class="exp-loc">📍 Parakou &amp; Abomey-Calavi</div>
+      </div>
+      <div>
+        <div class="exp-role">Assistant à la communication — Coordination Nord</div>
+        <div class="exp-desc">Organisation d'une conférence citoyenne sur le climat à Parakou. Animation et sensibilisation de la communauté locale, accueil de nouveaux membres, coordination des activités de terrain. Lauréat des Eco Benin Awards 2024.</div>
+        <div class="tags"><span class="tag">Communication</span><span class="tag">Écocitoyenneté</span><span class="tag">Eco Benin Award 2024</span></div>
+      </div>
+    </div>
+    <div class="exp-item reveal rd4">
+      <div>
+        <div class="exp-period">Expérience terrain</div>
+        <div class="exp-org">AGF International</div>
+        <div class="exp-loc">📍 Togo</div>
+      </div>
+      <div>
+        <div class="exp-role">Mission HSE — Hygiène, Sécurité &amp; Environnement</div>
+        <div class="exp-desc">Mission opérationnelle en gestion environnementale et conformité réglementaire HSE sur site industriel. Renforcement des pratiques de surveillance et de contrôle environnemental.</div>
+        <div class="tags"><span class="tag">HSE</span><span class="tag">Terrain</span><span class="tag">Togo</span><span class="tag">Conformité</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- COMPÉTENCES -->
+<section id="competences">
+<div class="sec-inner">
+  <p class="section-tag reveal">Expertise</p>
+  <h2 class="stitle reveal rd1">Mes <em>compétences</em></h2>
+  <div class="skills-grid">
+    <div class="skill-card reveal rd1">
+      <div class="skill-icon">🗺️</div>
+      <div class="skill-title">Géomatique &amp; SIG</div>
+      <ul class="skill-list">
+        <li>QGIS (niveau avancé)</li><li>ArcGIS</li>
+        <li>Cartographie thématique</li><li>Projections UTM / WGS84</li>
+        <li>Données vectorielles &amp; raster</li><li>Export Shapefile, KML</li>
+      </ul>
+    </div>
+    <div class="skill-card reveal rd2">
+      <div class="skill-icon">🌿</div>
+      <div class="skill-title">Évaluation Environnementale</div>
+      <ul class="skill-list">
+        <li>EIES &amp; NIES (instruction)</li><li>PGES (suivi &amp; mise en œuvre)</li>
+        <li>Normes IFC / Banque Mondiale</li><li>Rapports d'impact RSE</li>
+        <li>Aires marines protégées</li><li>Droit environnemental béninois</li>
+      </ul>
+    </div>
+    <div class="skill-card reveal rd3">
+      <div class="skill-icon">✍️</div>
+      <div class="skill-title">Analyse &amp; Rédaction</div>
+      <ul class="skill-list">
+        <li>Rédaction rapports techniques</li><li>Analyse territoriale</li>
+        <li>Diagnostic environnemental</li><li>Microsoft Office (avancé)</li>
+        <li>Français professionnel</li><li>Anglais scientifique</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- TÉLÉCHARGER CV (section dédiée) -->
+<section id="telecharger">
+<div class="cv-inner">
+  <div class="cv-text reveal">
+    <h2>Téléchargez mon CV complet</h2>
+    <p>Retrouvez l'ensemble de mon parcours, mes compétences et mes références dans mon curriculum vitae au format Word, prêt à transmettre.</p>
+  </div>
+  <div class="reveal rd2" style="text-align:center">
+    <!-- REMPLACE "mon-cv.docx" par le vrai nom de ton fichier une fois mis en ligne -->
+    <a href="mon-cv.docx" download class="btn-cv-dl">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Télécharger le CV (.docx)
+    </a>
+    <p class="cv-note">Format Word · Mis à jour 2026</p>
+  </div>
+</div>
+</section>
+
+<!-- PROJETS -->
+<section id="projets">
+<div class="sec-inner">
+  <p class="section-tag reveal">Portfolio</p>
+  <h2 class="stitle reveal rd1">Mes <em>projets</em></h2>
+  <div class="projects-grid">
+    <div class="proj-card reveal rd1">
+      <div class="proj-icon">🏖️</div>
+      <div class="proj-title">Cartographie des Aires Marines Protégées</div>
+      <div class="proj-desc">Production de données SIG pour les AMP de la Bouche du Roy et de Donaten. Délimitation, export Shapefile et KML compatibles QGIS.</div>
+      <div class="proj-tech">QGIS · UTM 31N · EPSG:32631</div>
+    </div>
+    <div class="proj-card reveal rd2">
+      <div class="proj-icon">🏗️</div>
+      <div class="proj-title">Route des Pêches — Phase 2</div>
+      <div class="proj-desc">Traitement de données d'emprise routière sur 4 sections. Tables de coordonnées, délimitation des emprises, livrables SIG pour rapport d'impact.</div>
+      <div class="proj-tech">QGIS · Infrastructure · EIES</div>
+    </div>
+    <div class="proj-card reveal rd3">
+      <div class="proj-icon">⛏️</div>
+      <div class="proj-title">Cartographie des Carrières du Littoral</div>
+      <div class="proj-desc">Géoréférencement et caractérisation de sites d'extraction. Description technique au format EIES/IFC avec terminologie RSE.</div>
+      <div class="proj-tech">QGIS · RSE · Norme IFC</div>
+    </div>
+    <div class="proj-card reveal rd1">
+      <div class="proj-icon">🎙️</div>
+      <div class="proj-title">Conférence Citoyenne Climat — Parakou</div>
+      <div class="proj-desc">Organisation et animation d'une conférence citoyenne sur les changements climatiques. Mobilisation de jeunes et d'acteurs institutionnels.</div>
+      <div class="proj-tech">Save Our Planet · Parakou</div>
+    </div>
+    <div class="proj-card reveal rd2">
+      <div class="proj-icon">📋</div>
+      <div class="proj-title">Rapport de Stage ABE — DEES</div>
+      <div class="proj-desc">Rédaction d'un rapport professionnel sur la DEES selon les standards administratifs béninois. Analyse des procédures d'EIES, NIES et PGES.</div>
+      <div class="proj-tech">DEES · DIESE · PGES · MCVT</div>
+    </div>
+    <div class="proj-card reveal rd3">
+      <div class="proj-icon">🎓</div>
+      <div class="proj-title">Candidatures Internationales Master</div>
+      <div class="proj-desc">Bourse Eiffel (présélectionné), AMU Master Géomatique, Université Senghor d'Alexandrie — dossiers complets avec lettres de motivation.</div>
+      <div class="proj-tech">AMU · Senghor · Bourse TIGER · Eiffel</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ACTIVITÉS -->
+<section id="activites">
+<div class="sec-inner">
+  <p class="section-tag reveal">Engagement terrain</p>
+  <h2 class="stitle reveal rd1">Activités &amp; <em>actions</em></h2>
+  <div class="act-grid">
+    <div class="act-card reveal rd1">
+      <div class="act-header">
+        <span class="act-type">🎖️ Cérémonie</span>
+        <span class="act-date">Parakou &amp; Abomey-Calavi</span>
+      </div>
+      <div class="act-body">
+        <div class="act-title">Remise de badges aux nouveaux membres — Save Our Planet</div>
+        <div class="act-desc">Cérémonie organisée simultanément dans les coordinations Nord et Sud. Accueil de nouveaux membres, discours sur l'écocitoyenneté en présence de la Présidente Mme Aïchatou BALLA et du Secrétaire Exécutif V. TOSSOUKPE.</div>
+        <div class="act-role">Rôle · Assistant à la communication, Coordination Nord</div>
+      </div>
+    </div>
+    <div class="act-card reveal rd2">
+      <div class="act-header">
+        <span class="act-type">♀️ Journée de la Femme</span>
+        <span class="act-date">8 mars 2024</span>
+      </div>
+      <div class="act-body">
+        <div class="act-title">Soutien aux femmes commerçantes — Marché Rose Croix Banikanni, Parakou</div>
+        <div class="act-desc">Campagne d'assainissement menée par le Planet'Club Parakou : collecte de déchets plastiques et sensibilisation aux gestes éco-responsables pour améliorer les conditions de travail des femmes commerçantes.</div>
+        <div class="act-role">Rôle · Membre actif, Coordination Nord</div>
+      </div>
+    </div>
+    <div class="act-card reveal rd3">
+      <div class="act-header">
+        <span class="act-type">🌳 Reboisement</span>
+        <span class="act-date">6 juillet 2024</span>
+      </div>
+      <div class="act-body">
+        <div class="act-title">Campagne de plantation d'arbres — Korobororou, Parakou</div>
+        <div class="act-desc">En partenariat avec l'Association des Guides du Bénin et l'Inspection Forestière du Borgou. Des centaines de plants mis en terre (Gmélina, Tectona grandis, Moringa, Caïlcédrats) pour la Journée Internationale de l'Arbre.</div>
+        <div class="act-role">Rôle · Représentant ONG Save Our Planet</div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- DISTINCTIONS -->
+<section id="distinctions">
+<div class="sec-inner">
+  <p class="section-tag reveal">Reconnaissances</p>
+  <h2 class="stitle reveal rd1">Prix &amp; <em>distinctions</em></h2>
+  <div class="awards-list">
+    <div class="award-item reveal rd2">
+      <div class="award-year">2024</div>
+      <div>
+        <div class="award-name">Eco Benin Awards — Jeune Activiste Environnemental</div>
+        <div class="award-body">Prix national récompensant l'engagement exemplaire d'un jeune acteur de la société civile en faveur de la protection de l'environnement au Bénin.</div>
+      </div>
+      <div class="award-icon">🏆</div>
+    </div>
+    <div class="award-item reveal rd3">
+      <div class="award-year">2024</div>
+      <div>
+        <div class="award-name">Présélection Bourse Eiffel — Campus France</div>
+        <div class="award-body">Présélection à la Bourse d'Excellence du gouvernement français pour un master dans une université française.</div>
+      </div>
+      <div class="award-icon">🇫🇷</div>
+    </div>
+    <div class="award-item reveal rd4">
+      <div class="award-year">2024</div>
+      <div>
+        <div class="award-name">Licence Professionnelle — Mention Bien</div>
+        <div class="award-body">Université de Parakou — Géographie &amp; Aménagement du Territoire.</div>
+      </div>
+      <div class="award-icon">🎓</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+<div class="sec-inner">
+  <p class="section-tag reveal">Contact</p>
+  <h2 class="stitle reveal rd1">Travaillons <em>ensemble</em></h2>
+  <div class="contact-grid">
+    <div class="reveal rd2">
+      <p class="contact-intro">Une collaboration, une opportunité, ou simplement échanger sur l'environnement ?</p>
+      <div class="contact-links">
+        <a href="mailto:votre.email@exemple.com" class="contact-link"><div class="contact-link-icon">✉</div>votre.email@exemple.com</a>
+        <a href="#" class="contact-link"><div class="contact-link-icon">in</div>linkedin.com/in/aurele-houetognon</a>
+        <a href="#" class="contact-link"><div class="contact-link-icon">📍</div>Abomey-Calavi, Bénin</a>
+      </div>
+    </div>
+    <div class="form-wrap reveal rd3">
+      <div class="form-row">
+        <div class="form-field"><label>Nom complet</label><input type="text" placeholder="Jean Dupont"/></div>
+        <div class="form-field"><label>Email</label><input type="email" placeholder="jean@exemple.com"/></div>
+      </div>
+      <div class="form-field"><label>Objet</label><input type="text" placeholder="Proposition de collaboration..."/></div>
+      <div class="form-field"><label>Message</label><textarea placeholder="Bonjour Aurèle..."></textarea></div>
+      <button class="btn btn-primary" onclick="alert('Pour activer ce formulaire, inscris-toi sur formspree.io et remplace cet onclick par l\'action Formspree.')">Envoyer →</button>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-brand">© 2026 · HOUETOGNON Comlan Alban Aurèle</span>
+  <ul class="footer-links">
+    <li><a href="#hero">Haut de page ↑</a></li>
+    <li><a href="#projets">Projets</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</footer>
+
+<script>
+// NAV scroll
+window.addEventListener('scroll',()=>{
+  document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>40);
+});
+
+// Mobile menu
+const toggle = document.getElementById('navToggle');
+const menu = document.getElementById('mobileMenu');
+toggle.addEventListener('click',()=>{
+  toggle.classList.toggle('open');
+  menu.classList.toggle('open');
+});
+function closeMobile(){toggle.classList.remove('open');menu.classList.remove('open')}
+
+// Scroll reveal
+const obs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}});
+},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
